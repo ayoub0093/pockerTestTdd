@@ -1,5 +1,4 @@
 import { test, expect } from "vitest";
-
 import { evaluateHand, evaluateHands } from "./poker";
 
 
@@ -225,3 +224,28 @@ test("returns the score of a single hand", () => {
 
     expect(evaluateHands([hand])).toBe(14);
 });
+
+test.each([
+    [[2, 2, 5, 9, 13], 13],
+    [[3, 3, 7, 7, 14], 14],
+    [[10, 10, 11, 12, 13], 13],
+    [[4, 4, 8, 8, 12], 12]
+])(
+    "hand with pairs %j returns highest card %i",
+    (values, expected) => {
+        const suits = [
+            "heart",
+            "spade",
+            "diamond",
+            "club",
+            "heart"
+        ];
+
+        const hand = values.map((value, index) => ({
+            value,
+            suit: suits[index]
+        }));
+
+        expect(evaluateHand(hand)).toBe(expected);
+    }
+);

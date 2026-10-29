@@ -90,3 +90,4 @@ export function evaluateHands(hands: Card[][]): number {
         0
     );
 }
+
