@@ -8,10 +8,14 @@ function getCardValues(hand: Card[]): number[] {
     return hand.map(card => card.value);
 }
 
-function hasThreeOfAKind(values: number[]): boolean {
+function hasMatchingCards(values: number[], count: number): boolean {
     return values.some(value =>
-        values.filter(cardValue => cardValue === value).length === 3
+        values.filter(cardValue => cardValue === value).length === count
     );
+}
+
+function hasThreeOfAKind(values: number[]): boolean {
+    return hasMatchingCards(values, 3);
 }
 
 function isStraight(values: number[]): boolean {
@@ -45,9 +49,7 @@ function isFullHouse(values: number[]): boolean {
 }
 
 function hasFourOfAKind(values: number[]): boolean {
-    return values.some(value =>
-        values.filter(cardValue => cardValue === value).length === 4
-    );
+    return hasMatchingCards(values, 4);
 }
 
 
@@ -58,9 +60,11 @@ function isStraightFlush(hand: Card[], values: number[]): boolean {
 
 export function evaluateHand(hand: Card[]): number {
     const values = getCardValues(hand);
-if (isStraightFlush(hand, values)) {
-    return 80;
-}
+
+    if (isStraightFlush(hand, values)) {
+        return 80;
+    }
+
     if (hasFourOfAKind(values)) {
         return 60;
     }
@@ -90,4 +94,3 @@ export function evaluateHands(hands: Card[][]): number {
         0
     );
 }
-
