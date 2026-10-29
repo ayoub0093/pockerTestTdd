@@ -1,31 +1,48 @@
-export function evaluateHand(hand: Card[]): number {
-    const values = hand.map(card => card.value);
+export type Card = {
+    value: number;
+    suit: string;
+};
 
-    const hasThreeOfAKind = values.some(value =>
-        values.filter(v => v === value).length === 3
+function getCardValues(hand: Card[]): number[] {
+    return hand.map(card => card.value);
+}
+
+function hasThreeOfAKind(values: number[]): boolean {
+    return values.some(value =>
+        values.filter(cardValue => cardValue === value).length === 3
     );
+}
 
-    if (hasThreeOfAKind) {
+function isStraight(values: number[]): boolean {
+    const sortedValues = [...values].sort((a, b) => a - b);
+
+    return sortedValues.every((value, index) =>
+        index === 0 || value === sortedValues[index - 1] + 1
+    );
+}
+
+function isFlush(hand: Card[]): boolean {
+    return hand.every(card => card.suit === hand[0].suit);
+}
+
+function getHighestCardValue(values: number[]): number {
+    return Math.max(...values);
+}
+
+export function evaluateHand(hand: Card[]): number {
+    const values = getCardValues(hand);
+
+    if (hasThreeOfAKind(values)) {
         return 30;
     }
 
-    const sortedValues = [...values].sort((a, b) => a - b);
-
-    const isStraight = sortedValues.every((value, index) =>
-        index === 0 || value === sortedValues[index - 1] + 1
-    );
-
-    const isFlush = hand.every(card =>
-        card.suit === hand[0].suit
-    );
-
-    if (isFlush) {
+    if (isFlush(hand)) {
         return 45;
     }
 
-    if (isStraight) {
+    if (isStraight(values)) {
         return 40;
     }
 
-    return Math.max(...values);
+    return getHighestCardValue(values);
 }
