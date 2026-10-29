@@ -112,3 +112,21 @@ test.each([
 
     expect(evaluateHand(hand)).toBe(expected);
 });
+
+test.each([
+    [2, 9, 50],
+    [7, 11, 50],
+    [14, 5, 50]
+])("full with three %i and two %i returns %i points",
+    (threeValue, pairValue, expected) => {
+        const hand = [
+            { value: threeValue, suit: "heart" },
+            { value: threeValue, suit: "spade" },
+            { value: threeValue, suit: "diamond" },
+            { value: pairValue, suit: "club" },
+            { value: pairValue, suit: "heart" }
+        ];
+
+        expect(evaluateHand(hand)).toBe(expected);
+    }
+);
