@@ -9,5 +9,15 @@ export function evaluateHand(hand: Card[]): number {
         return 30;
     }
 
+    const sortedValues = [...values].sort((a, b) => a - b);
+
+    const isStraight = sortedValues.every((value, index) =>
+        index === 0 || value === sortedValues[index - 1] + 1
+    );
+
+    if (isStraight) {
+        return 40;
+    }
+
     return Math.max(...values);
 }
