@@ -47,6 +47,8 @@ test.each([
 
     expect(evaluateHand(hand)).toBe(expected);
 });
+
+
 test.each([
     [
         [5, 6, 7, 8, 9],
@@ -69,4 +71,27 @@ test.each([
     }));
 
     expect(evaluateHand(hand)).toBe(expected);
+});
+
+test("Ace cannot be used as 1 in a straight", () => {
+    const hand = [
+        { value: 14, suit: "heart" },
+        { value: 2, suit: "spade" },
+        { value: 3, suit: "diamond" },
+        { value: 4, suit: "club" },
+        { value: 5, suit: "heart" }
+    ];
+
+    expect(evaluateHand(hand)).toBe(14);
+});
+test("repeated values do not form a straight", () => {
+    const hand = [
+        { value: 5, suit: "heart" },
+        { value: 5, suit: "spade" },
+        { value: 6, suit: "diamond" },
+        { value: 7, suit: "club" },
+        { value: 8, suit: "heart" }
+    ];
+
+    expect(evaluateHand(hand)).toBe(8);
 });
