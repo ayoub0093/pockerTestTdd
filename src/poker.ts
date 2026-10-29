@@ -32,8 +32,8 @@ function getHighestCardValue(values: number[]): number {
 export function evaluateHand(hand: Card[]): number {
     const values = getCardValues(hand);
 
-    if (hasThreeOfAKind(values)) {
-        return 30;
+    if (isFullHouse(values)) {
+        return 50;
     }
 
     if (isFlush(hand)) {
@@ -44,5 +44,22 @@ export function evaluateHand(hand: Card[]): number {
         return 40;
     }
 
+    if (hasThreeOfAKind(values)) {
+        return 30;
+    }
+
     return getHighestCardValue(values);
+}
+function isFullHouse(values: number[]): boolean {
+    const uniqueValues = [...new Set(values)];
+
+    if (uniqueValues.length !== 2) {
+        return false;
+    }
+
+    const firstValueCount = values.filter(
+        value => value === uniqueValues[0]
+    ).length;
+
+    return firstValueCount === 2 || firstValueCount === 3;
 }
