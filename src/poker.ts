@@ -50,9 +50,17 @@ function hasFourOfAKind(values: number[]): boolean {
     );
 }
 
+
+function isStraightFlush(hand: Card[], values: number[]): boolean {
+    return isFlush(hand) && isStraight(values);
+}
+
+
 export function evaluateHand(hand: Card[]): number {
     const values = getCardValues(hand);
-
+if (isStraightFlush(hand, values)) {
+    return 80;
+}
     if (hasFourOfAKind(values)) {
         return 60;
     }

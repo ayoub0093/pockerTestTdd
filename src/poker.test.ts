@@ -149,3 +149,19 @@ test.each([
         expect(evaluateHand(hand)).toBe(expected);
     }
 );
+
+test.each([
+    [5, "heart", 80],
+    [9, "spade", 80],
+    [10, "diamond", 80]
+])(
+    "straight flush starting at %i with suit %s returns %i",
+    (startValue, suit, expected) => {
+        const hand = Array.from({ length: 5 }, (_, index) => ({
+            value: startValue + index,
+            suit
+        }));
+
+        expect(evaluateHand(hand)).toBe(expected);
+    }
+);
