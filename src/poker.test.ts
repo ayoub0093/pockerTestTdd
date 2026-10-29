@@ -130,3 +130,22 @@ test.each([
         expect(evaluateHand(hand)).toBe(expected);
     }
 );
+
+test.each([
+    [2, 9, 60],
+    [7, 13, 60],
+    [14, 5, 60]
+])(
+    "four cards of value %i with a %i return %i points",
+    (fourOfAKindValue, otherValue, expected) => {
+        const hand = [
+            { value: fourOfAKindValue, suit: "heart" },
+            { value: fourOfAKindValue, suit: "spade" },
+            { value: fourOfAKindValue, suit: "diamond" },
+            { value: fourOfAKindValue, suit: "club" },
+            { value: otherValue, suit: "heart" }
+        ];
+
+        expect(evaluateHand(hand)).toBe(expected);
+    }
+);

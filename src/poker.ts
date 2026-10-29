@@ -1,3 +1,4 @@
+
 export type Card = {
     value: number;
     suit: string;
@@ -29,8 +30,32 @@ function getHighestCardValue(values: number[]): number {
     return Math.max(...values);
 }
 
+function isFullHouse(values: number[]): boolean {
+    const uniqueValues = [...new Set(values)];
+
+    if (uniqueValues.length !== 2) {
+        return false;
+    }
+
+    const firstValueCount = values.filter(
+        value => value === uniqueValues[0]
+    ).length;
+
+    return firstValueCount === 2 || firstValueCount === 3;
+}
+
+function hasFourOfAKind(values: number[]): boolean {
+    return values.some(value =>
+        values.filter(cardValue => cardValue === value).length === 4
+    );
+}
+
 export function evaluateHand(hand: Card[]): number {
     const values = getCardValues(hand);
+
+    if (hasFourOfAKind(values)) {
+        return 60;
+    }
 
     if (isFullHouse(values)) {
         return 50;
@@ -49,17 +74,4 @@ export function evaluateHand(hand: Card[]): number {
     }
 
     return getHighestCardValue(values);
-}
-function isFullHouse(values: number[]): boolean {
-    const uniqueValues = [...new Set(values)];
-
-    if (uniqueValues.length !== 2) {
-        return false;
-    }
-
-    const firstValueCount = values.filter(
-        value => value === uniqueValues[0]
-    ).length;
-
-    return firstValueCount === 2 || firstValueCount === 3;
 }
