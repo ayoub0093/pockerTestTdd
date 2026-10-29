@@ -83,3 +83,10 @@ if (isStraightFlush(hand, values)) {
 
     return getHighestCardValue(values);
 }
+
+export function evaluateHands(hands: Card[][]): number {
+    return hands.reduce(
+        (totalScore, hand) => totalScore + evaluateHand(hand),
+        0
+    );
+}

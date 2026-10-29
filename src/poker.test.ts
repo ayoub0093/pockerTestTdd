@@ -1,5 +1,7 @@
 import { test, expect } from "vitest";
-import { evaluateHand } from "./poker";
+
+import { evaluateHand, evaluateHands } from "./poker";
+
 
 test.each([
     [7, 7],
@@ -165,3 +167,61 @@ test.each([
         expect(evaluateHand(hand)).toBe(expected);
     }
 );
+
+
+test("returns the total score of multiple hands", () => {
+    const hands = [
+        // Full House: 50
+        [
+            { value: 2, suit: "heart" },
+            { value: 2, suit: "spade" },
+            { value: 2, suit: "diamond" },
+            { value: 9, suit: "club" },
+            { value: 9, suit: "heart" }
+        ],
+
+        // Straight: 40
+        [
+            { value: 5, suit: "heart" },
+            { value: 6, suit: "spade" },
+            { value: 7, suit: "diamond" },
+            { value: 8, suit: "club" },
+            { value: 9, suit: "heart" }
+        ],
+
+        // Flush: 45
+        [
+            { value: 2, suit: "spade" },
+            { value: 5, suit: "spade" },
+            { value: 7, suit: "spade" },
+            { value: 9, suit: "spade" },
+            { value: 13, suit: "spade" }
+        ],
+
+        // High Card: 13
+        [
+            { value: 2, suit: "heart" },
+            { value: 4, suit: "spade" },
+            { value: 7, suit: "diamond" },
+            { value: 10, suit: "club" },
+            { value: 13, suit: "heart" }
+        ]
+    ];
+
+    expect(evaluateHands(hands)).toBe(148);
+});
+test("returns zero when there are no hands", () => {
+    expect(evaluateHands([])).toBe(0);
+});
+
+test("returns the score of a single hand", () => {
+    const hand = [
+        { value: 2, suit: "heart" },
+        { value: 4, suit: "spade" },
+        { value: 7, suit: "diamond" },
+        { value: 10, suit: "club" },
+        { value: 14, suit: "heart" }
+    ];
+
+    expect(evaluateHands([hand])).toBe(14);
+});
