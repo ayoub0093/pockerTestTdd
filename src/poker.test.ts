@@ -95,3 +95,20 @@ test("repeated values do not form a straight", () => {
 
     expect(evaluateHand(hand)).toBe(8);
 });
+
+test.each([
+    ["heart", 45],
+    ["spade", 45],
+    ["diamond", 45],
+    ["club", 45]
+])("five cards of suit %s should return %i points", (suit, expected) => {
+    const hand = [
+        { value: 2, suit },
+        { value: 5, suit },
+        { value: 7, suit },
+        { value: 9, suit },
+        { value: 13, suit }
+    ];
+
+    expect(evaluateHand(hand)).toBe(expected);
+});
