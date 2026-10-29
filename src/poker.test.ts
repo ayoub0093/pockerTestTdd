@@ -38,12 +38,35 @@ test.each([
     [14, 30]
 ])("three cards of value %i should return %i points", (value, expected) => {
     const hand = [
-        { value: value, suit: "heart" },
-        { value: value, suit: "spade" },
-        { value: value, suit: "diamond" },
-        { value: 3, suit: "club" },
-        { value: 5, suit: "heart" }
+        { value, suit: "heart" },
+        { value, suit: "spade" },
+        { value, suit: "diamond" },
+        { value: 9, suit: "club" },
+        { value: 10, suit: "heart" }
     ];
+
+    expect(evaluateHand(hand)).toBe(expected);
+});
+test.each([
+    [
+        [5, 6, 7, 8, 9],
+        40
+    ],
+    [
+        [10, 11, 12, 13, 14],
+        40
+    ],
+    [
+        [9, 5, 7, 6, 8],
+        40
+    ]
+])("straight %j should return %i points", (values, expected) => {
+    const suits = ["heart", "spade", "diamond", "club", "heart"];
+
+    const hand = values.map((value, index) => ({
+        value,
+        suit: suits[index]
+    }));
 
     expect(evaluateHand(hand)).toBe(expected);
 });
